@@ -19,7 +19,7 @@ def stop_task():
     e.g.: GET /stop_task/?id=some_id revokes the task
     """
     task_id = request.args.get('id', '')
-    print(revoke(str(task_id)))
+    os.system('	celery -A app control revoke {}'.format(task_id))
     return '''
     <!doctype html>
     <title>Task Stopped</title>
