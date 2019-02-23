@@ -1,23 +1,17 @@
-# views go here
+import os,sys,arrow
 from socialcops import app
 from socialcops.models.models import Data,Teams,Task
 from flask import render_template,request,redirect, url_for,send_from_directory
-import os
-import sys
-sys.path.append('..')
+from celery.task.control import revoke
 from werkzeug.utils import secure_filename
-from app import upload
+sys.path.append('..')
+
+from app import upload,create_teams
 
 @app.route('/')
 def socialcops():
   return render_template("index.html")
 
-
-# @app.route('/person')
-# def person():
-#   p1 = Person.query.first_or_404()
-#   #Eprint(p1)
-#   return "name = {}, age= {}".format(p1.first_name, 18)
 
 @app.route('/stop_task/')
 def stop_task():
@@ -25,7 +19,7 @@ def stop_task():
     e.g.: GET /stop_task/?id=some_id revokes the task
     """
     task_id = request.args.get('id', '')
-    #call the task
+    print(revoke(str(task_id)))
     return '''
     <!doctype html>
     <title>Task Stopped</title>
@@ -57,8 +51,7 @@ def upload_file():
             filename = secure_filename(file.filename)
             location = os.path.join(app.config['UPLOAD_FOLDER'], filename)
             file.save(location)
-            task_id = upload.delay()
-            print(task_id)
+            task_id = upload.delay(filename)
             task = Task(task_id = str(task_id),file_name = filename,task_type = 1)
             task.save()
             return str(task_id)
@@ -89,8 +82,10 @@ def create_teams():
             filename = secure_filename(file.filename)
             location = os.path.join(app.config['UPLOAD_FOLDER'], filename)
             file.save(location)
-            #call the task
-            return redirect(url_for('uploaded_file',filename=filename))
+            task_id = create_teams.delay(filename)
+            task = Task(task_id = str(task_id),file_name = filename,task_type = 2)
+            task.save()
+            return str(task_id)
     return '''
     <!doctype html>
     <title>Upload new File</title>
