@@ -11,6 +11,12 @@ class Teams(db.Document):
   email = db.EmailField()
 
 
+class Task(db.Document):
+	task_id = db.StringField()
+	file_name = db.StringField()
+	task_type = db.IntField()
+
+
 
 # Supported fields
 # StringField

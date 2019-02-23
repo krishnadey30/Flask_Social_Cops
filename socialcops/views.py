@@ -1,6 +1,6 @@
 # views go here
 from socialcops import app
-from socialcops.models.models import Data,Teams
+from socialcops.models.models import Data,Teams,Task
 from flask import render_template,request,redirect, url_for,send_from_directory
 import os
 from werkzeug.utils import secure_filename
@@ -55,6 +55,9 @@ def upload_file():
             location = os.path.join(app.config['UPLOAD_FOLDER'], filename)
             file.save(location)
             #call the task
+            task_id = 'random_id'
+            task = Task(task_id = task_id,filename = filename,task_type = 1)
+            task.save()
             return redirect(url_for('uploaded_file',filename=filename))
     return '''
     <!doctype html>
