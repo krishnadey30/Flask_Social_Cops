@@ -6,4 +6,5 @@ app = Celery('tasks', backend='rpc://', broker='pyamqp://socialcops:socialcops!2
 
 @app.task
 def upload():
-	time.sleep(600)
+	time.sleep(60)
+	return "hello"
