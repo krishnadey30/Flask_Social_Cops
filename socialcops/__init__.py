@@ -5,7 +5,7 @@ import os
 
 # declaring the app
 app = Flask(__name__)
-app.config['MONGOALCHEMY_DATABASE'] = 'person'
+app.config['MONGOALCHEMY_DATABASE'] = 'socialcops'
 
 UPLOAD_FOLDER = '/path/to/the/uploads'
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
@@ -21,4 +21,4 @@ app.config.from_pyfile(os.path.join(base_dir, '../app.cfg'))
 import socialcops.views
 
 # import models
-from socialcops.models.models import Person
+from socialcops.models.models import Data,Teams
