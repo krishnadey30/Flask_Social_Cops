@@ -10,7 +10,7 @@ base_dir = os.path.dirname(os.path.abspath(__file__))
 #app.config.from_pyfile(os.path.join(base_dir, '../app.cfg'))
 app.config['MONGODB_SETTINGS'] = {
     'db': 'socialcops',
-    'host': 'mongodb://localhost/database_name'
+    'host': 'mongodb://localhost/socialcops'
 }
 UPLOAD_FOLDER = os.path.join(base_dir, 'media/')
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER

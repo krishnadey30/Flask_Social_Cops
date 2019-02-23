@@ -56,9 +56,9 @@ def upload_file():
             file.save(location)
             #call the task
             task_id = 'random_id'
-            task = Task(task_id = task_id,filename = filename,task_type = 1)
+            task = Task(task_id = task_id,file_name = filename,task_type = 1)
             task.save()
-            return redirect(url_for('uploaded_file',filename=filename))
+            # return redirect(url_for('uploaded_file',filename=filename))
     return '''
     <!doctype html>
     <title>Upload new File</title>
