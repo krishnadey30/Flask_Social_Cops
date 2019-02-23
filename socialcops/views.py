@@ -3,8 +3,10 @@ from socialcops import app
 from socialcops.models.models import Data,Teams,Task
 from flask import render_template,request,redirect, url_for,send_from_directory
 import os
+import sys
+sys.path.append('..')
 from werkzeug.utils import secure_filename
-from ..app import upload
+from app import upload
 
 @app.route('/')
 def socialcops():
@@ -56,9 +58,10 @@ def upload_file():
             location = os.path.join(app.config['UPLOAD_FOLDER'], filename)
             file.save(location)
             task_id = upload.delay()
-            task = Task(task_id = task_id,file_name = filename,task_type = 1)
+            print(task_id)
+            task = Task(task_id = str(task_id),file_name = filename,task_type = 1)
             task.save()
-            return task_id
+            return str(task_id)
             # return redirect(url_for('uploaded_file',filename=filename))
     return '''
     <!doctype html>
