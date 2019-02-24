@@ -1,8 +1,6 @@
 from flask_script import Manager, Server, Shell
 from socialcops import app
 from socialcops import db
-
-# (optional) - include models if you want to!
 import socialcops.models as models
 
 def _make_context():
